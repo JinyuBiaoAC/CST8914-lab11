@@ -15,16 +15,18 @@ accordionBtns.forEach((accordion) => {
   accordion.onclick = function () {
     this.classList.toggle("is-open");
 
-    let content = this.nextElementSibling;
+    let content = document.getElementById(this.getAttribute("aria-controls"));
     console.log(content);
 
-    if (content.style.maxHeight) {
-      //this is if the accordion is open
+    const expanded = this.getAttribute("aria-expanded") === "true";
+    this.setAttribute("aria-expanded", String(!expanded));
+
+    if (expanded) {
       content.style.maxHeight = null;
+      content.hidden = true;
     } else {
-      //if the accordion is currently closed
-      content.style.maxHeight = content.scrollHeight + "px";
-      console.log(content.style.maxHeight);
+      content.hidden = false;
+      content.style.maxHeight = "none";
     }
   };
 });
